@@ -5,10 +5,29 @@
        xmlns:int-http="http://www.springframework.org/schema/integration/http"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http.xsd">
 
+    <int:gateway service-interface="com.sergeynik.integrationhttp.SimpleGateway"
+                 default-request-channel="httpOutbound"/>
+
+    <int:channel id="httpOutbound"/>
+
+    <int-http:outbound-gateway
+            request-channel="httpOutbound"
+            url="http://ya.ru/"
+            http-method="GET"
+            reply-channel="httpReply">
+
+    </int-http:outbound-gateway>
+
+    <int:channel id="httpReply"/>
+
+    <bean class="com.sergeynik.integrationhttp.MessagePrinter" id="printer2"/>
+
+    <int:service-activator ref="printer2" input-channel="httpReply" method="printConsole"/>
+
     <int-http:inbound-gateway
-            path="/"
+            request-channel="httpChannel"
             supported-methods="GET"
-            request-channel="httpChannel">
+            path="/">
     </int-http:inbound-gateway>
 
     <int:channel id="httpChannel"/>
