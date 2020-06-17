@@ -5,16 +5,16 @@
        xmlns:int-http="http://www.springframework.org/schema/integration/http"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http.xsd">
 
-    <int-http:inbound-channel-adapter
+    <int-http:inbound-gateway
             path="/"
             supported-methods="GET"
-            channel="httpChannel">
-    </int-http:inbound-channel-adapter>
+            request-channel="httpChannel">
+    </int-http:inbound-gateway>
 
     <int:channel id="httpChannel"/>
 
     <bean class="com.sergeynik.integrationhttp.MessagePrinter" id="printer"/>
 
-    <int:service-activator ref="printer" input-channel="httpChannel" method="printConsole"/>
+    <int:service-activator ref="printer" input-channel="httpChannel" method="print"/>
 
 </beans>
