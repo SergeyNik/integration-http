@@ -1,0 +1,1 @@
+INSERT INTO "user" VALUES ('ef4fe991-d1e4-4221-bf5a-e95e82943b8e', 'Mike')
